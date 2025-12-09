@@ -3,9 +3,8 @@ name: "CI"
 
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    branches:
+      - '**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -13,8 +12,8 @@ concurrency:
 
 jobs:
   test:
-    runs-on: macOS
+    runs-on: [self-hosted, macOS]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Run Tests
         run: swift test -v
