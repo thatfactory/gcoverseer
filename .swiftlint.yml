@@ -1,9 +1,0 @@
----
-line_length:
-  ignores_comments: true
-
-disabled_rules:
-  - nesting  # Opinion-based (https://stackoverflow.com/a/46767132/584548)
-
-excluded:
-  - '.build/*'
