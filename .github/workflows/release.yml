@@ -1,5 +1,5 @@
 ---
-name: "CI"
+name: "release"
 
 on:
   push:
