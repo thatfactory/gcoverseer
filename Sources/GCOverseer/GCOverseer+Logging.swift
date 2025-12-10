@@ -21,7 +21,7 @@ public extension GCOverseer {
     /// in the *macOS Console app*.
     ///
     /// In the **macOS Console app**, you can filter GCOverseer's output by
-    /// `SUBSYSTEM`: `com.backslash-f.GCOverseer`.
+    /// `SUBSYSTEM`: `com.thatfactory.GCOverseer`.
     func enableLogging() {
         isLoggingEnabled = true
     }
@@ -47,7 +47,7 @@ internal extension GCOverseer {
     ///   - category: A member of the `GCOverseerLoggingCategory` enum.
     func log(information: String, category: GCOverseerLoggingCategory) {
         guard isLoggingEnabled else { return }
-        let subsystem = "com.backslash-f.GCOverseer"
+        let subsystem = "com.thatfactory.GCOverseer"
         let logger = AppLogger(subsystem: subsystem, category: category.rawValue)
         logger.log(information)
     }

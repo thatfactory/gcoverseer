@@ -1,4 +1,4 @@
-// swift-tools-version:6.0
+// swift-tools-version:6.2
 
 import PackageDescription
 
@@ -17,12 +17,12 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/backslash-f/applogger",
-            .upToNextMajor(from: "2.0.0")
+            url: "https://github.com/thatfactory/applogger",
+            from: "0.1.0"
         ),
         .package(
             url: "https://github.com/apple/swift-testing.git",
-            branch: "swift-6.0.2-RELEASE"
+            branch: "swift-6.2.1-RELEASE"
         )
     ],
     targets: [
@@ -45,6 +45,5 @@ let package = Package(
                 )
             ]
         )
-    ],
-    swiftLanguageModes: [.v5, .v6]
+    ]
 )
