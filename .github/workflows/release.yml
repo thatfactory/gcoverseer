@@ -15,6 +15,16 @@ jobs:
     runs-on: [self-hosted, macOS]
     steps:
       - uses: actions/checkout@v6
+        with:
+          clean: true
+      - name: Clear SwiftPM caches
+        run: |
+          rm -rf ~/.swiftpm
+          rm -rf ~/Library/Caches/org.swift.swiftpm
+          rm -rf ~/Library/org.swift.swiftpm
+          rm -rf .swiftpm
+          rm -rf .build
+
       - name: Run Tests
         run: swift test -v
 
