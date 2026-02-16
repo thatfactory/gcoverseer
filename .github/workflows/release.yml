@@ -2,6 +2,8 @@
 name: "release"
 
 on:
+  schedule:
+    - cron: '0 4 * * *'
   push:
     branches:
       - '**'
@@ -15,6 +17,25 @@ concurrency:
 
 jobs:
   test:
+    if: github.event_name != 'schedule'
+    runs-on: [self-hosted, macOS]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          clean: true
+      - name: Clear SwiftPM caches
+        run: |
+          rm -rf ~/.swiftpm
+          rm -rf ~/Library/Caches/org.swift.swiftpm
+          rm -rf ~/Library/org.swift.swiftpm
+          rm -rf .swiftpm
+          rm -rf .build
+
+      - name: Run Tests
+        run: swift test -v
+
+  daily_test:
+    if: github.event_name == 'schedule'
     runs-on: [self-hosted, macOS]
     steps:
       - uses: actions/checkout@v6
