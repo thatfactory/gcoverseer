@@ -1,12 +1,8 @@
 ---
-name: "release"
+name: Release
+run-name: Release ${{ github.event.release.tag_name }}
 
 on:
-  schedule:
-    - cron: '0 4 * * *'
-  push:
-    branches:
-      - '**'
   release:
     types:
       - published
@@ -17,31 +13,15 @@ concurrency:
 
 jobs:
   test:
-    if: github.event_name != 'schedule'
+    name: Test Release
     runs-on: [self-hosted, macOS]
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout Repository
+        uses: actions/checkout@v6
         with:
           clean: true
-      - name: Clear SwiftPM caches
-        run: |
-          rm -rf ~/.swiftpm
-          rm -rf ~/Library/Caches/org.swift.swiftpm
-          rm -rf ~/Library/org.swift.swiftpm
-          rm -rf .swiftpm
-          rm -rf .build
 
-      - name: Run Tests
-        run: swift test -v
-
-  daily_test:
-    if: github.event_name == 'schedule'
-    runs-on: [self-hosted, macOS]
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          clean: true
-      - name: Clear SwiftPM caches
+      - name: Clear SwiftPM Caches
         run: |
           rm -rf ~/.swiftpm
           rm -rf ~/Library/Caches/org.swift.swiftpm
@@ -53,16 +33,14 @@ jobs:
         run: swift test -v
 
   notify_package_collection:
-    # Only notify when an actual GitHub Release is published
-    if: github.event_name == 'release' && github.event.action == 'published'
+    name: Notify Package Collection
     runs-on: ubuntu-latest
     needs: test
-
     steps:
-      - name: Trigger swift-package-collection rebuild
+      - name: Trigger Swift Package Collection Rebuild
         env:
           COLLECTION_REPO: thatfactory/swift-package-collection
-          WORKFLOW_FILE: release.yml
+          WORKFLOW_FILE: publish.yml
           REF: main
           GH_TOKEN: ${{ secrets.COLLECTION_TRIGGER_TOKEN }}
           SOURCE_REPO: ${{ github.repository }}

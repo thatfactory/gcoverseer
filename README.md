@@ -3,6 +3,7 @@
 [![spm-ready](https://img.shields.io/badge/spm-ready-b68f6a.svg?logo=gitlfs&logoColor=white)](https://developer.apple.com/documentation/xcode/swift-packages)
 [![platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20iPadOS%20%7C%20macOS%20%7C%20Mac%20Catalyst%20%7C%20tvOS%20%7C%20visionOS-lightgrey.svg?logo=apple&logoColor=white)](https://en.wikipedia.org/wiki/List_of_Apple_operating_systems)
 [![license](https://img.shields.io/badge/license-MIT-67ac5b.svg?logo=googledocs&logoColor=white)](https://en.wikipedia.org/wiki/MIT_License)
+[![ci](https://github.com/thatfactory/gcoverseer/actions/workflows/ci.yml/badge.svg)](https://github.com/thatfactory/gcoverseer/actions/workflows/ci.yml)
 [![release](https://github.com/thatfactory/gcoverseer/actions/workflows/release.yml/badge.svg)](https://github.com/thatfactory/gcoverseer/actions/workflows/release.yml)
 
 # GCOverseer 🎮
