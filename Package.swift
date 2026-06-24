@@ -5,9 +5,9 @@ import PackageDescription
 let package = Package(
     name: "GCOverseer",
     platforms: [
-        .iOS(.v27),
-        .macOS(.v27),
-        .tvOS(.v27)
+        .iOS(.v26),
+        .macOS(.v26),
+        .tvOS(.v26)
     ],
     products: [
         .library(
