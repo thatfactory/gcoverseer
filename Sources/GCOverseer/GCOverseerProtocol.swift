@@ -1,5 +1,5 @@
 import Foundation
-import GameController
+public import GameController
 
 /// Protocol for GCOverseer operations, used for abstraction and testing.
 public protocol GCOverseerProtocol {

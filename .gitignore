@@ -1,7 +1,66 @@
+# macOS
 .DS_Store
-/.build
-/Packages
-/*.xcodeproj
-*.xcworkspace
+
+# Xcode user data, build output, and archives
 xcuserdata/
-Package.resolved
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+*.hmap
+/build/
+/DerivedData/
+*.ipa
+*.dSYM
+*.dSYM.zip
+
+# Xcode playground generated state
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift Package Manager
+/.build/
+/Packages/
+.swiftpm/configuration/registries.json
+
+# Node.js
+node_modules/
+dist/
+coverage/
+*.tgz
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local credentials and environment configuration
+.env
+.env.*
+!.env.example
+!.env.*.example
+.netrc
+
+# ThatFactory tooling state
+.appstore-connect-mcp/
+.devspace/
+/public-check/
+
+# Project-specific entries require a durable rationale after repository-owner review.
+# Project-specific: <why this generated or local-only path must not be tracked>

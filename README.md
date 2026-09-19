@@ -40,22 +40,24 @@ class GameScene: SKScene {
 }
 ```
 ## Available Properties
-Property | Description
--------- | -----------
-`var connectionStream: AsyncStream<GameControllerEvent>` | Provides an `AsyncSequence` for observing connect/disconnect events of game controllers.
-`var controllers: [GCController]` | Returns all controllers connected to the device. E.g. *DualShock*, *Xbox*, *Siri Remote* controllers, etc.
+
+| Property | Description |
+| --- | --- |
+| `var connectionStream: AsyncStream<GameControllerEvent>` | Provides an `AsyncSequence` for observing connect/disconnect events of game controllers. |
+| `var controllers: [GCController]` | Returns all controllers connected to the device. E.g. *DualShock*, *Xbox*, *Siri Remote* controllers, etc. |
 
 ## Available APIs
-API | Description
---- | -----------
-`extendedGamepadControllers()` | Returns all controllers supporting the `extendedGamepad` profile connected to the device. E.g., *DualShock*, *Xbox* controllers, etc.
-`dualShockControllers()` | Returns all *DualShock* controllers that are connected to the device.
-`dualSenseControllers()` | Returns all *DualSense* controllers that are connected to the device.
-`xboxControllers()` | Returns all *Xbox* controllers that are connected to the device.
-`microGamepadControllers()` | Returns all controllers supporting the `microGamepad` profile connected to the device. E.g. Apple's *Siri Remote*.
-`motionControllers()` | Returns all controllers supporting the `motion` profile connected to the device.
-`controllerFor(playerIndex:)` | Returns the controller for the player 1, player 2, etc.
-`enableLogging() / disableLogging()` | Enables/disables logging output.
+
+| API | Description |
+| --- | --- |
+| `extendedGamepadControllers()` | Returns all controllers supporting the `extendedGamepad` profile connected to the device. E.g., *DualShock*, *Xbox* controllers, etc. |
+| `dualShockControllers()` | Returns all *DualShock* controllers that are connected to the device. |
+| `dualSenseControllers()` | Returns all *DualSense* controllers that are connected to the device. |
+| `xboxControllers()` | Returns all *Xbox* controllers that are connected to the device. |
+| `microGamepadControllers()` | Returns all controllers supporting the `microGamepad` profile connected to the device. E.g. Apple's *Siri Remote*. |
+| `motionControllers()` | Returns all controllers supporting the `motion` profile connected to the device. |
+| `controllerFor(playerIndex:)` | Returns the controller for the player 1, player 2, etc. |
+| `enableLogging() / disableLogging()` | Enables/disables logging output. |
 
 ## Integration
 ### Xcode
@@ -69,7 +71,7 @@ In your `Package.swift`, add `GCOverseer` as a dependency:
 dependencies: [
     .package(
         url: "https://github.com/thatfactory/gcoverseer",
-        from: "0.1.2"
+        from: "0.1.3"
     )
 ]
 ```

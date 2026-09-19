@@ -11,13 +11,29 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
+  swift-format:
+    name: Swift Format
+    runs-on: [self-hosted, macOS]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Validate Consumer Integration
+        run: AgentGuidelines/Scripts/validate_consumer_setup.swift
+
+      - name: Run Strict Swift Format
+        run: AgentGuidelines/Scripts/swift_format.sh lint-strict Package.swift Sources Tests
+
   test:
     name: Test
     runs-on: [self-hosted, macOS]
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           clean: true
 
