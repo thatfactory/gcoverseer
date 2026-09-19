@@ -1,7 +1,7 @@
-import GameController
+public import GameController
 
 /// Public APIs go here.
-public extension GCOverseer {
+extension GCOverseer {
     /// Returns all controllers supporting the `extendedGamepad` profile that are connected to the device. E.g. *DualShock*, *Xbox* controllers, etc.
     ///
     /// The controls associated with the extended gamepad profile include the following:
@@ -17,7 +17,7 @@ public extension GCOverseer {
     /// *... a controller supporting the Extended Gamepad profile for example supports the Gamepad profile and more...*.
     ///
     /// - Returns: All the connected controllers supporting the `extendedGamepad` profile.
-    func extendedGamepadControllers() -> [GCController] {
+    public func extendedGamepadControllers() -> [GCController] {
         let controllers = controllers.filter { $0.extendedGamepad != nil }
         log(information: "Number of extended controllers: \(controllers.count)", category: .controller)
         return controllers
@@ -26,7 +26,7 @@ public extension GCOverseer {
     /// Returns all *DualShock* controllers that are connected to the device.
     ///
     /// - Returns: All the connected controllers with `physicalInputProfile` matching `GCDualShockGamepad`.
-    func dualShockControllers() -> [GCController] {
+    public func dualShockControllers() -> [GCController] {
         let controllers = controllers.filter {
             $0.physicalInputProfile.isKind(of: GCDualShockGamepad.self)
         }
@@ -37,7 +37,7 @@ public extension GCOverseer {
     /// Returns all *DualSense* controllers that are connected to the device.
     ///
     /// - Returns: All the connected controllers with `physicalInputProfile` matching `GCDualSenseGamepad`.
-    func dualSenseControllers() -> [GCController] {
+    public func dualSenseControllers() -> [GCController] {
         let controllers = controllers.filter {
             $0.physicalInputProfile.isKind(of: GCDualSenseGamepad.self)
         }
@@ -48,7 +48,7 @@ public extension GCOverseer {
     /// Returns all *Xbox* controllers that are connected to the device.
     ///
     /// - Returns: All the connected controllers with `physicalInputProfile` matching `GCXboxGamepad`.
-    func xboxControllers() -> [GCController] {
+    public func xboxControllers() -> [GCController] {
         let controllers = controllers.filter { $0.physicalInputProfile.isKind(of: GCXboxGamepad.self) }
         log(information: "Number of Xbox controllers: \(controllers.count)", category: .controller)
         return controllers
@@ -66,7 +66,7 @@ public extension GCOverseer {
     /// See: https://developer.apple.com/documentation/gamecontroller/gcmicrogamepad
     ///
     /// - Returns: All the connected controllers supporting the `microGamepad` profile.
-    func microGamepadControllers() -> [GCController] {
+    public func microGamepadControllers() -> [GCController] {
         let controllers = controllers.filter { $0.microGamepad != nil }
         log(information: "Number of micro controllers: \(controllers.count)", category: .controller)
         return controllers
@@ -79,7 +79,7 @@ public extension GCOverseer {
     /// See: https://developer.apple.com/documentation/gamecontroller/gcmotion
     ///
     /// - Returns: All the connected controllers supporting the `microGamepad` profile.
-    func motionControllers() -> [GCController] {
+    public func motionControllers() -> [GCController] {
         let controllers = controllers.filter { $0.motion != nil }
         log(information: "Number of motion controllers: \(controllers.count)", category: .controller)
         return controllers
@@ -89,7 +89,7 @@ public extension GCOverseer {
     ///
     /// - Parameter playerIndex: The player number that may have a controller associated with. E.g.: `.index1`
     /// - Returns: An optional `GCController` associated with the given player number (`GCControllerPlayerIndex`).
-    func controllerFor(playerIndex: GCControllerPlayerIndex) -> GCController? {
+    public func controllerFor(playerIndex: GCControllerPlayerIndex) -> GCController? {
         let controller = controllers.first(where: { $0.playerIndex == playerIndex })
         let controllerInfo = String(describing: controller)
         let playerNumber = playerIndex.rawValue + 1

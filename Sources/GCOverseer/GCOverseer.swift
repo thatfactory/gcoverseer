@@ -1,5 +1,5 @@
 import Foundation
-import GameController
+public import GameController
 
 /// Observes MFI or Remote Controllers in the area. Sets them up.
 public class GCOverseer: GCOverseerProtocol, @unchecked Sendable {
@@ -47,7 +47,7 @@ public class GCOverseer: GCOverseerProtocol, @unchecked Sendable {
 
 // MARK: - Private
 
-private extension GCOverseer {
+extension GCOverseer {
     /// Creates an `AsyncStream` that emits `true` when a controller connects
     /// and `false` when a controller disconnects.
     ///
@@ -58,7 +58,7 @@ private extension GCOverseer {
     /// The stream continues running indefinitely until explicitly terminated or deallocated.
     ///
     /// - Returns: An `AsyncStream<GameControllerEvent>` representing the connection state changes.
-    func createConnectionStream() -> AsyncStream<GameControllerEvent> {
+    fileprivate func createConnectionStream() -> AsyncStream<GameControllerEvent> {
         AsyncStream { continuation in
             // Handle `.GCControllerDidConnect` notifications
             let connectTask = Task {
@@ -85,16 +85,16 @@ private extension GCOverseer {
     }
 
     @MainActor
-    func updateControllers() {
+    fileprivate func updateControllers() {
         controllers = controllersProvider()
     }
 
-    func logConnectedControllers() {
+    fileprivate func logConnectedControllers() {
         guard isLoggingEnabled else { return }
         log(information: "Number of connected controllers: \(controllers.count)", category: .controller)
-        controllers.enumerated().forEach {
-            let productCategory = String(describing: $0.element.productCategory)
-            log(information: "Controller \($0.offset + 1): \(productCategory)", category: .controller)
+        for (offset, controller) in controllers.enumerated() {
+            let productCategory = String(describing: controller.productCategory)
+            log(information: "Controller \(offset + 1): \(productCategory)", category: .controller)
         }
     }
 }

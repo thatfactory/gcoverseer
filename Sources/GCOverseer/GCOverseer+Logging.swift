@@ -1,18 +1,17 @@
-import Foundation
 import AppLogger
+import Foundation
 
 /// `GCOverseer` logging categories to further distinguish the running parts of the package.
 ///
 /// Refer to: https://developer.apple.com/documentation/os/logging
 public enum GCOverseerLoggingCategory: String {
-    case controller     = "GCOverseer_Controller"
-    case notification   = "GCOverseer_Notification"
+    case controller = "GCOverseer_Controller"
+    case notification = "GCOverseer_Notification"
 }
 
 // MARK: - Interface
 
-public extension GCOverseer {
-
+extension GCOverseer {
     // MARK: Enable / Disable Logging
 
     /// Enables logging information via `AppLogger`.
@@ -22,20 +21,19 @@ public extension GCOverseer {
     ///
     /// In the **macOS Console app**, you can filter GCOverseer's output by
     /// `SUBSYSTEM`: `com.thatfactory.GCOverseer`.
-    func enableLogging() {
+    public func enableLogging() {
         isLoggingEnabled = true
     }
 
     /// Disables logging information via `AppLogger`.
-    func disableLogging() {
+    public func disableLogging() {
         isLoggingEnabled = false
     }
 }
 
 // MARK: - Internal
 
-internal extension GCOverseer {
-
+extension GCOverseer {
     func log(notification: Notification) {
         log(information: "Received game controller notification: \(notification)", category: .notification)
     }
