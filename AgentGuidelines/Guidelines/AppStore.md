@@ -21,6 +21,10 @@ Omission means unmanaged. Add only fields and domains the project intends to rec
 
 Ordinary metadata, screenshot, commerce, provisioning, or signing synchronization does not authorize submitting a version for review or releasing it. Use the MCP's explicit readiness and submission workflow only when the owner has separately placed submission in scope.
 
+## Accessibility support claims
+
+Before adding or retaining a Reduced Motion support declaration, apply the shared [Reduce Motion support evaluation](Swift/SwiftUI.md#declaring-support). Keep the platform-specific consumer evidence current; adopting these guidelines alone does not establish support. Include any requested metadata change in the inspected synchronization plan above rather than inferring publication authority from a policy or implementation change.
+
 ## Screenshots
 
 Treat each localization's `screenshots.json` as the ordered manifest for its selected display sets. Paths are relative to `AppStore/`, and the explicit array order is the storefront order. Preserve reusable originals in the repository; do not silently resize, transcode, substitute another locale, or derive ordering from filenames.

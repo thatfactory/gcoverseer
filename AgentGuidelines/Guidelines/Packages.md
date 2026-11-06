@@ -10,7 +10,7 @@ Start a new ThatFactory project or package README with a centered HTML badge blo
 </p>
 ```
 
-For example, a repository using all supported badge configurations could use:
+For example, a repository using the baseline and relevant optional badge configurations could use:
 
 ```html
 <p align="center">
@@ -25,8 +25,6 @@ For example, a repository using all supported badge configurations could use:
   <a href="https://docs.anthropic.com/en/docs/claude-code/mcp"><img alt="Claude MCP" src="https://img.shields.io/badge/Claude-MCP-D97757.svg?logo=claude&logoColor=white"></a>
   <a href="https://thatfactory.github.io/applogger/documentation/applogger/"><img alt="DocC" src="https://img.shields.io/badge/DocC-documentation-0288D1.svg?logo=bookstack&logoColor=white"></a>
   <a href="https://en.wikipedia.org/wiki/MIT_License"><img alt="License" src="https://img.shields.io/badge/License-MIT-67ac5b.svg?logo=googledocs&logoColor=white"></a>
-  <a href="https://github.com/thatfactory/swift-package-collection/commits/main/"><img alt="Updated" src="https://img.shields.io/endpoint?url=https://thatfactory.github.io/swift-package-collection/badges/updated.json&logo=convertio&logoColor=white"></a>
-  <a href="https://github.com/thatfactory/swift-package-collection/blob/main/CHANGELOG.md"><img alt="Revision" src="https://img.shields.io/endpoint?url=https://thatfactory.github.io/swift-package-collection/badges/revision.json&logo=gitbook&logoColor=white"></a>
   <a href="https://github.com/thatfactory/agent-guidelines/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/thatfactory/agent-guidelines/actions/workflows/ci.yml/badge.svg"></a>
   <a href="https://github.com/thatfactory/swift-package-collection/actions/workflows/publish.yml"><img alt="Publish" src="https://github.com/thatfactory/swift-package-collection/actions/workflows/publish.yml/badge.svg"></a>
   <a href="https://github.com/thatfactory/xcode-cloud-mcp/actions/workflows/nightly.yml"><img alt="Nightly" src="https://github.com/thatfactory/xcode-cloud-mcp/actions/workflows/nightly.yml/badge.svg"></a>
@@ -42,16 +40,15 @@ Use only badges that describe the repository, in this order:
 5. Relevant agent or tooling badges, such as Xcode MCP, Codex, or Claude.
 6. DocC, documentation.
 7. License.
-8. Updated date.
-9. Revision or latest release.
-10. CI badges.
-11. Release/publishing status when applicable.
+8. CI badges.
+9. Release/publishing workflow status when applicable.
 
-The common package baseline is Swift, Xcode, Platforms, License, and CI. Add optional badges only when they convey useful repository-specific information. Keep the order stable even when some positions are omitted.
+The common package baseline is Swift, Xcode, Platforms, License, and CI, plus a Release/publishing workflow-status badge when the package has that workflow. Add optional badges only when they convey useful repository-specific information. Keep the order stable even when some positions are omitted.
+
+Swift package READMEs omit Updated/last-commit-date and Revision/latest-release-version badges by default. Add or retain one only when the repository's `AGENTS.md` or linked durable documentation records the specific badge, its source, and the reader need that justifies the exception. A publishing workflow's success/failure badge remains part of the normal convention; it reports operational status rather than a revision or release version. An approved date/version badge belongs after License and before CI, uses a dynamic source, and must not require manual version/date edits.
 
 - Point CI, publishing, and documentation badges at workflows in the current repository; never copy another repository's badge URL unchanged.
 - Use descriptive `alt` text. Preserve a repository's established Xcode badge convention when the label intentionally records the last verified Xcode version.
-- Prefer dynamic Updated and Revision badges backed by repository history or releases so maintainers do not edit dates and versions by hand.
 - Do not advertise a platform, integration, package manager, or agent that the repository does not support.
 - Keep the repository's license in a root `LICENSE` file when reuse or redistribution is permitted.
 - Retain the README license badge when the standard badge set applies, but do not add a dedicated License heading or license-description section to a package README. GitHub already presents the repository license beside the README, and the badge provides the summary without duplicating license prose.
@@ -62,7 +59,7 @@ The common package baseline is Swift, Xcode, Platforms, License, and CI. Add opt
 - Keep a reusable package focused on one coherent capability.
 - Prefer UI-agnostic domain APIs unless UI is the package's explicit purpose.
 - Do not add application Redux, navigation, persistence, or product policy to a generic package.
-- A first-party package must not introduce or conceal a third-party runtime dependency. Follow the [external dependency policy](Development.md#external-dependencies) before changing the dependency graph.
+- A first-party package must not introduce or conceal a third-party runtime dependency outside an explicitly approved role. Follow the [external dependency policy](Development.md#external-dependencies) before changing the dependency graph and [Networking](Networking.md) for network implementation and its standing approval.
 - Keep public APIs minimal and stable. Prefer composing focused types over introducing umbrella abstractions before multiple consumers need them.
 - Declare platform and Swift toolchain requirements explicitly in `Package.swift`.
 - New Swift packages must start on the latest supported Swift language and toolchain version. Before adding a major package capability to an older package, plan and complete the required Swift/toolchain modernization first.
@@ -113,6 +110,10 @@ Accept a deviation only when the nearest applicable `AGENTS.md`, or durable docu
 ## Logging
 
 Packages own any diagnostics emitted by their implementation. Follow the shared [logging guide](Logging.md) for AppLogger usage, subsystem identity, package emoji prefixes, domain-owned categories, concise messages, privacy, and test coverage. A consuming application must not reproduce package-internal logs.
+
+Before assigning or changing a package's canonical emoji, inspect the package list on the current `main` branch of the [ThatFactory Swift Package Collection](https://github.com/thatfactory/swift-package-collection) and confirm that no other package uses it. Each package emoji must be unique across ThatFactory so a log prefix identifies one package unambiguously. Treat visually identical emoji spellings that differ only by presentation selectors as the same emoji; do not use an encoding variation to create an apparent distinction.
+
+Declare the selected emoji in the package's local instructions or documentation, use that exact emoji in its package-local logging gateway, and add or update the matching Swift Package Collection entry as part of the package's publication work. An existing collision, a missing registry entry for a published package, or disagreement among the registry, documentation, and emitted prefix blocks release readiness until reconciled.
 
 ## Development workflow
 

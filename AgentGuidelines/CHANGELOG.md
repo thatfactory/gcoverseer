@@ -2,6 +2,122 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.0.47] - 2026-11-06
+
+### Added
+
+- Added independently versioned Codex review policy with full and review-only adoption profiles, exact managed root contracts, a Swift synchronizer, and a pinned shared CI action. Latest-policy checks reject stale or modified content and uncertain provenance.
+- Added regression coverage for synchronization, preservation of local instructions, profile boundaries, duplicate contracts, publication identities, and unavailable policy sources.
+
+### Changed
+
+- Restricted review output to substantiated P0/P1 defects, clarified one automatic opening/ready review with local verification of batched remediation, and retained bounded monitoring and explicit owner authorization for extra review.
+- Made reviewer rules and PR lifecycle available directly in every root instruction file without adopting unrelated guidance. Removed retired delegated-review exceptions and aligned audit, release, and global instruction templates.
+
+## [0.0.46] - 2026-11-05
+
+### Changed
+
+- Made the self-hosted runner's active Xcode/Swift toolchain the CI default, with environment logging and real build/test validation. Exact version or build pins require a documented, evidence-backed repository exception with a revisit condition.
+- Updated the Xcode-upgrade skill to remove unjustified CI pins instead of moving them to the newly validated version.
+- Clarified Swift package badges: omit Updated and Revision/latest-release-version badges unless a documented reader need justifies them; retain Release/publishing workflow-status badges for the package's own workflows.
+
+### Added
+
+- Added completion-audit checks for toolchain constraints in workflows and invoked scripts, documented exceptions, active-toolchain validation, and Swift package badge semantics.
+
+## [0.0.45] - 2026-11-04
+
+### Added
+
+- Added the canonical Networking guide requiring Apple-native networking and typed HTTP through Apple's `swift-http-types` HTTPTypes and HTTPTypesFoundation products with URLSession transport, including native bridges and justified capability-gap exceptions.
+- Added networking audit coverage for actual typed implementation, target linkage, native transport, validation, and explicit adoption deferrals without a false full-compliance claim.
+
+### Changed
+
+- Centralized network transport ownership and validation guidance with links from architecture, package, testing, and security guides.
+- Updated the consumer external-dependency contract to v2 for the narrow standing approval of `swift-http-types`; consumers must synchronize the root contract on adoption. Other external runtime dependencies retain their approval requirements.
+
+## [0.0.44] - 2026-10-30
+
+### Added
+
+- Added the reusable `xcode-upgrade` skill for intentional Xcode, dependency, compiler-settings, and CI upgrades in applications and Swift packages, including requested project-format conversion and evidence-based validation.
+- Documented consumer discovery through a subtree skill symlink and explicit invocation with a target Xcode and additional instructions.
+
+## [0.0.43] - 2026-10-29
+
+### Added
+
+- Documented a bounded physical Apple TV diagnostic for current-user CloudKit and local-store identity, including the observed secondary-profile account crossover, privacy-safe comparisons, profile re-addition, and limits on attributing a tvOS cause.
+- Added audit coverage for real two-account evidence when a consumer changes tvOS per-user storage or CloudKit account binding; unrelated changes and documentation-only work remain outside that gate.
+
+## [0.0.42] - 2026-10-20
+
+### Changed
+
+- Replaced the explicit-request restriction on Reduce Motion adaptations with Apple-aligned evaluation of individual motion triggers, responsive preference handling, and preservation of useful feedback.
+- Required platform-specific common-task evidence before declaring Reduced Motion support, with re-evaluation on app updates and a link from App Store metadata guidance.
+- Added focused Reduce Motion audit checks, scenario walkthroughs, and validator regression coverage for policy, evidence, and support claims.
+
+## [0.0.41] - 2026-10-20
+
+### Added
+
+- Required reusable custom-styled controls to own smooth visual transitions while functional state changes immediately, preserving native feedback, stable identity, and narrow animation scope.
+- Added display-appropriate image preparation, bounded memory, derivative invalidation, original preservation, and stale-result rejection guidance.
+- Added an animation and image-rendering audit with targeted runtime evidence, honest performance measurements, scenario walkthroughs, and validator mutation coverage. Existing Reduce Motion policy is unchanged.
+
+## [0.0.40] - 2026-10-20
+
+### Added
+
+- Made Apple-owned placement authoritative for standard navigation, dismissal, confirmation, and window controls, with semantic toolbar intent and native Back behavior preserved across platforms.
+- Added a completion-audit check for control ownership, unjustified placement overrides, conflicting design mandates, and relevant interaction evidence.
+- Added the `update-agent-guidelines` skill to persist shared decisions, ask about audit coverage when unspecified, update release metadata, and deliver an authorized reviewed PR and release.
+
+## [0.0.39] - 2026-10-19
+
+### Added
+
+- Added shared Device Hub, physical-device, and simulator guidance covering tool and skill discovery, authorization, signing, keyboard controls, resource coordination, runtime evidence, controlled comparisons, and cleanup.
+- Linked the workflow from Xcode MCP, Development, the guideline catalog, and the consumer instructions template while keeping product-specific environment constraints in consumers.
+
+## [0.0.38] - 2026-10-15
+
+### Added
+
+- Made size-based scroll bounce the SwiftUI `ScrollView` default on supported deployment targets, with axis and environment-scope guidance for nested scrolling and modal sheets.
+- Added a completion-audit check for new or changed `ScrollView` bounce behavior and documented exceptions.
+
+## [0.0.37] - 2026-10-14
+
+### Added
+
+- Made native SwiftUI and platform components the default for supported interactions, with approved durable exceptions required for verified native capability gaps.
+- Defined presentation hierarchy, independent child dismissal, parent draft retention, cancellation, dismissal-completion cleanup, and required runtime interaction evidence.
+- Added a mandatory completion-audit decision check for custom component and presentation lifecycle replacements, with validator and regression coverage.
+
+## [0.0.36] - 2026-10-09
+
+### Added
+
+- Added SwiftUI animation guidance favoring purposeful native feedback, default SwiftUI animation, system transitions, and SF Symbol effects while keeping animations scoped and interactions responsive.
+- Required an explicit task-prompt request before adding app-level Reduce Motion guards, while preserving accessibility behavior supplied automatically by native system components.
+
+## [0.0.35] - 2026-09-27
+
+### Changed
+
+- Require positive repository-specific evidence before automatic Codex review becomes a merge gate. Track configuration separately from current-head execution, default undiscoverable settings to `unknown`, and bound deduplicated start-signal monitoring to five minutes.
+
+## [0.0.34] - 2026-09-20
+
+### Changed
+
+- Required every ThatFactory package emoji to be unique in the Swift Package Collection and synchronized across package documentation, the logging gateway, and the collection registry.
+- Extended the completion audit to block package publication when emoji uniqueness cannot be verified or the registered and emitted identities disagree.
+
 ## [0.0.33] - 2026-09-19
 
 ### Added
@@ -118,7 +234,7 @@ All notable changes to this project are documented in this file.
 
 ### Changed
 
-- Clarified that the bounded review-round policy applies to Codex GitHub reviews, while otherwise-authorized ChatGPT and Reasoning Relay delegations use their own workflow limits.
+- Clarified that the bounded review-round policy applies to Codex GitHub reviews, while other explicitly selected advisory workflows used their own limits.
 - Namespaced Codex review tracking fields and advanced the consumer code-review contract to v2.
 
 ## [0.0.20] - 2026-08-21

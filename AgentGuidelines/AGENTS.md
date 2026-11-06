@@ -43,23 +43,28 @@ This public repository is the versioned source of truth for reusable ThatFactory
 - `Scripts/swift_format.sh` is the sole retained shell-script exception because it is the existing command wrapper around Xcode's `swift-format`; do not use it as precedent for new shell automation.
 - Do not add Python, Ruby, JavaScript, or other scripting-language runtimes for repository automation.
 
-<!-- BEGIN THATFACTORY CODE REVIEW CONTRACT v2 -->
+<!-- THATFACTORY CODEX REVIEW POLICY profile=central revision=1 source=local -->
+<!-- BEGIN THATFACTORY CODE REVIEW CONTRACT v3 -->
 ## Code Review Rules
 
-Review for release-blocking defects introduced or materially exposed by the pull request. A clean review means no unresolved P0/P1 findings; it does not mean exhaustive or perfect software.
+Report only substantiated P0/P1 defects introduced or materially exposed by this change. Require a concrete, reachable failure in a supported use case or documented threat model, with serious impact such as a security-boundary bypass, durable data loss or corruption, a crash or deadlock in an important workflow, loss of availability, or a serious compatibility regression. An acceptance-criterion violation alone does not establish P1 severity.
 
-A blocking finding must identify a concrete, reachable path in a supported use case or the documented threat model that can cause a credible security-boundary bypass, durable data loss or corruption, a crash or deadlock, loss of availability, violation of an explicit acceptance criterion, or a serious compatibility regression.
+For each finding, state severity, preconditions, execution path, impact, evidence, and actionable remediation. Group manifestations of one root cause. Report substantiated blockers together. Omit unsolicited P2/P3 observations, style preferences, speculative hardening, optional tests, and refactors. A clean review means no unresolved P0/P1 blockers, not perfect software.
 
-For every blocking finding, state the severity, preconditions, execution path, impact, evidence, and actionable remediation. Group manifestations that share the same root cause into one finding.
+A follow-up review covers unresolved P0/P1 findings, changes since the previous reviewed commit, and directly affected code. Do not restart a full review of unchanged code. New follow-up findings must be P0/P1 defects introduced by remediation or genuinely hidden by the previous blocker.
+<!-- END THATFACTORY CODE REVIEW CONTRACT v3 -->
 
-Treat P2/P3 observations as non-blocking, including defense-in-depth, theoretical completeness, unsupported use cases, malformed state that trusted code cannot produce, behavior by components outside the threat model, style preferences, and speculative refactoring. Record a useful lower-severity observation once as deferred, declined, duplicate, or follow-up work; do not keep the review loop open for it.
+<!-- BEGIN THATFACTORY PR LIFECYCLE CONTRACT v1 -->
+## Pull Request Lifecycle
 
-In an initial review, report substantiated blockers together. A follow-up review is limited to unresolved P0/P1 findings, changes since the last reviewed commit, and code directly affected by those changes. Do not restart an unrestricted review of unchanged code. A new follow-up finding must be a P0/P1 defect introduced by the remediation or genuinely hidden by the previous blocker.
+Finish implementation, inspect the diff, and run relevant local validation before opening a ready-for-review PR. Drafts are for incomplete preparation; mark ready before waiting for automatic review. Keep the review head stable while the initial review runs. One automatic Codex review is the initial review; never duplicate it with a manual request or repeatedly toggle draft/ready state.
 
-The review-round budget below applies only to Codex GitHub reviews: the configured automatic Codex review and any manual `@codex review` request. It does not apply to ChatGPT review or reasoning delegated through Reasoning Relay. An otherwise-authorized Reasoning Relay workflow may request as many Relay review or follow-up delegations as its own governing workflow requires; those requests neither consume the Codex budget nor require repository-owner authorization under it.
+Establish review configuration from repository-specific evidence. Verify the bot, PR, review round, and reviewed commit using PR/request-comment reactions, review submissions, inline threads, and checks. Eyes means processing, not approval; a thumbs-up means no suggestions only for its verified review round. Historical reactions, missing comments, and elapsed time never certify a newer head. Monitor at most five minutes total with bounded, non-accelerating polls; timeout leaves a required gate unresolved and never authorizes merge.
 
-Automatic Codex review is the initial Codex review. Do not request a manual Codex review unless the repository owner explicitly asks. Never request another Codex review after each remediation commit. Within the normal Codex review budget, at most one owner-authorized, delta-scoped Codex verification review may be requested under [the pull-request review workflow](Guidelines/GitHub/PullRequests.md).
-<!-- END THATFACTORY CODE REVIEW CONTRACT v2 -->
+Batch accepted P0/P1 fixes, verify them locally, rerun affected checks, and disposition and resolve every review thread. A completed initial review plus an explicitly recorded, locally verified remediation-only delta can satisfy the review gate; do not claim Codex reviewed the newer head. New unrelated scope belongs in another PR. Request at most one delta-scoped verification only when the owner explicitly authorizes it. Do not request reviews after every fix or casually mention the bot to start extra work. Separate Security Review is manual and requires explicit owner instruction.
+
+Before merge, rerun the latest published review-policy check, confirm no required review is pending, no unresolved P0/P1 blocker remains, every thread is dispositioned and resolved, required checks pass on the current head, and existing human approval or merge authorization is satisfied. A bot thumbs-up is not a substitute for required GitHub approval. Opening a PR does not authorize merging it.
+<!-- END THATFACTORY PR LIFECYCLE CONTRACT v1 -->
 
 ## Validation
 
@@ -67,13 +72,15 @@ Run:
 
 ```sh
 Scripts/validate_guidelines.swift
+Tests/run_tests.swift
+Scripts/sync_codex_review_policy.swift check --local-source . --profile central
 ```
 
 Fix every validation failure before releasing a version.
 
 ## Consumer pull-request review scope
 
-When reviewing a consumer pull request, do not review or comment on files under `AgentGuidelines/**` after exact tagged-tree provenance has been verified. That subtree is a tracked, synchronized copy marked `linguist-generated`; substantive guideline changes are reviewed in this repository. Verify the intended `AgentGuidelines/VERSION`, compare the subtree tree with the matching central tag (for example with `git subtree split --prefix=AgentGuidelines HEAD` and a tree comparison after fetching that tag), and verify the required `.gitattributes` rule. If provenance does not match exactly, review the subtree contents and stop the merge. Report substantive guideline feedback against the central `agent-guidelines` pull request instead.
+When reviewing a consumer pull request, do not review or comment on files under `AgentGuidelines/**` after exact tagged-tree provenance has been verified. That subtree is a tracked, synchronized copy marked `linguist-generated`; substantive guideline changes are reviewed in this repository. Verify the intended `AgentGuidelines/VERSION`, compare the subtree tree with the matching central tag (for example by comparing `git rev-parse HEAD:AgentGuidelines` with the fetched tag's root tree), and verify the required `.gitattributes` rule. If provenance does not match exactly, review the subtree contents and stop the merge. Report substantive guideline feedback against the central `agent-guidelines` pull request instead.
 
 ## Releases
 
@@ -81,3 +88,7 @@ When reviewing a consumer pull request, do not review or comment on files under 
 - Create a Git tag and GitHub release matching `VERSION`.
 - Consumer repositories adopt releases deliberately through Git subtree updates.
 - Follow [the pull-request review workflow](Guidelines/GitHub/PullRequests.md) before merging any release change.
+
+## Repository review configuration
+
+The owner confirmed automatic Codex review is enabled for this repository on 2026-11-06. Use all PR authors and the opening/ready trigger, keep exhaustive review off, and keep separate Security Review manual. Apply the managed lifecycle and [review-policy integration](ReviewPolicy/README.md).

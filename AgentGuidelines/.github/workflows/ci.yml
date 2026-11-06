@@ -20,4 +20,6 @@ jobs:
       - name: Validate
         run: |
           Tests/run_tests.swift
+          Tests/run_review_policy_tests.swift
           Scripts/validate_guidelines.swift
+          Scripts/sync_codex_review_policy.swift check --local-source . --profile central
