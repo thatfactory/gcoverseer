@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.0.48] - 2026-11-06
+
+### Changed
+
+- Simplified the repository review declaration to state directly that automatic Codex PR review is enabled. The canonical review contracts and independent review-policy revision remain unchanged.
+
 ## [0.0.47] - 2026-11-06
 
 ### Added

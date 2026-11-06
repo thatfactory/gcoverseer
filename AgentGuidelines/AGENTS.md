@@ -91,4 +91,4 @@ When reviewing a consumer pull request, do not review or comment on files under 
 
 ## Repository review configuration
 
-The owner confirmed automatic Codex review is enabled for this repository on 2026-11-06. Use all PR authors and the opening/ready trigger, keep exhaustive review off, and keep separate Security Review manual. Apply the managed lifecycle and [review-policy integration](ReviewPolicy/README.md).
+Automatic Codex PR review is enabled. Use all PR authors and the opening/ready trigger, keep exhaustive review off, and keep separate Security Review manual. Apply the managed lifecycle and [review-policy integration](ReviewPolicy/README.md).
