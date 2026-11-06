@@ -50,3 +50,5 @@
 - Report which tests ran and whether any relevant tests could not be executed.
 
 Follow [Xcode MCP](../Xcode/MCP.md) for build and runtime verification.
+
+Follow [Networking](../Networking.md#ownership-and-validation) for networking test boundaries and required evidence.

@@ -2,7 +2,7 @@
 
 ## Workflow principles
 
-- Keep CI deterministic, reproducible, and aligned with the repository's supported Xcode, Swift, and platform versions.
+- Keep CI deterministic and reproducible through declared inputs, compiler settings, and validation, using the [runner toolchain policy](#runner-toolchain).
 - Treat warnings introduced by a change as failures even when the compiler does not.
 - Prefer the smallest permissions required by each workflow and job.
 - For a new workflow, use the latest stable major version of every GitHub Action available at the time of creation.
@@ -11,6 +11,26 @@
 - Pin third-party actions to an intentional version and review updates.
 - Do not place secrets in workflow files, logs, fixtures, or command arguments that may be echoed.
 - Keep release workflows separate from pull-request validation when their permissions differ.
+
+## Runner toolchain
+
+Use the active Xcode and Swift toolchain supplied by the self-hosted runner. Log the selected developer directory, Xcode version/build, and Swift version so failures identify the actual environment. Let dependency resolution, compilation, tests, and required validation expose real incompatibilities after an update; a different version string alone must not fail a job.
+
+Do not pin an exact Xcode release, build number, or bundled Swift compiler version by default. This applies to workflow conditions, equality or text checks, setup-action inputs, versioned installation paths, runner labels, and scripts invoked by CI. Do not replace an exact check with an allowlist or upper bound that still rejects a compatible newer toolchain. Preserve legitimate minimum tools versions, Swift language modes, SDK/deployment requirements, simulator destinations, and capability or first-launch checks. These express supported capabilities rather than the last environment an agent happened to validate.
+
+A version pin is permitted only for a concrete repository-specific reason documented in that repository's `AGENTS.md` or linked durable build/CI documentation. Record the affected workflows and scripts, exact constraint, demonstrated incompatibility or external requirement, evidence, and the condition for revisiting or removing it. A historical upgrade target or a generic claim of reproducibility is not sufficient justification. Keep the exception as narrow as the demonstrated requirement, and report it during the completion audit.
+
+Respect the runner's configured selection, including an inherited `DEVELOPER_DIR`. A process-scoped override for an explicitly requested toolchain investigation or upgrade is appropriate; it does not authorize adding a permanent CI pin or changing machine-global `xcode-select`. Record historical validation versions as evidence without turning them into future acceptance conditions.
+
+For example, a workflow can report its environment without comparing version strings:
+
+```yaml
+- name: Log active toolchain
+  run: |
+    xcode-select -p
+    xcodebuild -version
+    xcrun swiftc --version
+```
 
 ## Tooling and automation
 

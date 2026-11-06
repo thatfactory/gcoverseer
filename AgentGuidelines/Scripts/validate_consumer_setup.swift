@@ -8,12 +8,14 @@ import Foundation
 #endif
 
 let guidelinesRoot = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
-let contractBegin = "<!-- BEGIN THATFACTORY CODE REVIEW CONTRACT v2 -->"
-let contractEnd = "<!-- END THATFACTORY CODE REVIEW CONTRACT v2 -->"
+let contractBegin = "<!-- BEGIN THATFACTORY CODE REVIEW CONTRACT v3 -->"
+let contractEnd = "<!-- END THATFACTORY CODE REVIEW CONTRACT v3 -->"
+let lifecycleContractBegin = "<!-- BEGIN THATFACTORY PR LIFECYCLE CONTRACT v1 -->"
+let lifecycleContractEnd = "<!-- END THATFACTORY PR LIFECYCLE CONTRACT v1 -->"
 let documentationContractBegin = "<!-- BEGIN THATFACTORY DOCUMENTATION MAINTENANCE CONTRACT v1 -->"
 let documentationContractEnd = "<!-- END THATFACTORY DOCUMENTATION MAINTENANCE CONTRACT v1 -->"
-let externalDependencyContractBegin = "<!-- BEGIN THATFACTORY EXTERNAL DEPENDENCY CONTRACT v1 -->"
-let externalDependencyContractEnd = "<!-- END THATFACTORY EXTERNAL DEPENDENCY CONTRACT v1 -->"
+let externalDependencyContractBegin = "<!-- BEGIN THATFACTORY EXTERNAL DEPENDENCY CONTRACT v2 -->"
+let externalDependencyContractEnd = "<!-- END THATFACTORY EXTERNAL DEPENDENCY CONTRACT v2 -->"
 let observabilityContractBegin = "<!-- BEGIN THATFACTORY RUNTIME OBSERVABILITY CONTRACT v1 -->"
 let observabilityContractEnd = "<!-- END THATFACTORY RUNTIME OBSERVABILITY CONTRACT v1 -->"
 let markdownLinkPattern = #"\[[^\]]+\]\(([^)]+)\)"#
@@ -335,6 +337,7 @@ func validateConsumerSetup(
     if let template, let agents {
         let contracts = [
             (contractBegin, contractEnd, "code-review"),
+            (lifecycleContractBegin, lifecycleContractEnd, "PR-lifecycle"),
             (documentationContractBegin, documentationContractEnd, "documentation-maintenance"),
             (externalDependencyContractBegin, externalDependencyContractEnd, "external-dependency"),
             (observabilityContractBegin, observabilityContractEnd, "runtime-observability"),
@@ -346,6 +349,12 @@ func validateConsumerSetup(
                 agents, begin: begin, end: end, errors: &errors, label: "consumer AGENTS.md")
             if let expected, let actual, expected != actual {
                 errors.append("consumer AGENTS.md: \(name) contract does not match AgentGuidelines/Templates/AGENTS.md")
+            }
+        }
+        for family in ["CODE REVIEW", "PR LIFECYCLE"] {
+            let prefix = "<!-- BEGIN THATFACTORY \(family) CONTRACT"
+            if agents.components(separatedBy: prefix).count - 1 != 1 {
+                errors.append("consumer AGENTS.md: obsolete or duplicate \(family.lowercased()) contract")
             }
         }
         for value in ["## Codex review scope", "AgentGuidelines/**", "exact tagged-tree provenance", ".gitattributes"]

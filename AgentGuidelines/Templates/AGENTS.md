@@ -17,16 +17,20 @@ Read only the guides relevant to the task:
 - [Unit and integration testing](AgentGuidelines/Guidelines/Testing/UnitTesting.md)
 - [Documentation](AgentGuidelines/Guidelines/Documentation.md)
 - [Logging](AgentGuidelines/Guidelines/Logging.md)
+- [Networking](AgentGuidelines/Guidelines/Networking.md)
 - [Packages](AgentGuidelines/Guidelines/Packages.md)
 - [Development workflow](AgentGuidelines/Guidelines/Development.md)
 - [CI/CD](AgentGuidelines/Guidelines/CICD.md)
 - [Git repositories and SSH-first cloning](AgentGuidelines/Guidelines/Git/Repositories.md)
 - [GitHub pull requests](AgentGuidelines/Guidelines/GitHub/PullRequests.md)
 - [Xcode MCP and visual verification](AgentGuidelines/Guidelines/Xcode/MCP.md)
+- [Device Hub, physical devices, and simulators](AgentGuidelines/Guidelines/Xcode/DeviceInteraction.md)
 - [Xcode project settings](AgentGuidelines/Guidelines/Xcode/ProjectSettings.md)
 - [Xcode security audits](AgentGuidelines/Guidelines/Xcode/Security.md)
 
 For an application that uses Redux, also read [Redux architecture](AgentGuidelines/Guidelines/Architecture/Redux.md).
+
+For Codex pull-request review, use the linked review evidence rules. If authoritative repository-specific evidence establishes that automatic review is enabled, apply its current-head gate. If the executing agent cannot establish the setting, record it as `unknown`; this template does not establish that automatic review is configured.
 
 Keep the following observability contract in the consumer repository's root `AGENTS.md` so implementation agents treat runtime diagnostics as part of lifecycle work. Copy it unchanged and update it when the marker version changes in this template.
 
@@ -43,19 +47,21 @@ Every ThatFactory package log starts with its canonical emoji and uses its own s
 Keep the following marked external-dependency contract in the consumer repository's root `AGENTS.md` so implementation agents receive the rule directly before they make dependency choices. Copy it unchanged and update it when the marker version changes in this template.
 
 ```md
-<!-- BEGIN THATFACTORY EXTERNAL DEPENDENCY CONTRACT v1 -->
+<!-- BEGIN THATFACTORY EXTERNAL DEPENDENCY CONTRACT v2 -->
 ## External Dependency Policy
 
 Do not introduce third-party source or binary dependencies into ThatFactory applications, games, or reusable packages during normal development. Prefer Apple platform APIs, the Swift standard library, code owned by the current repository, or focused ThatFactory-owned packages. If reusable capability is missing, implement it natively at the appropriate boundary and consider extracting it into a first-party package instead of selecting an external library.
 
-A third-party dependency may be added, or expanded to a new target or runtime role, only with explicit repository-owner approval for that specific use before modifying the dependency graph. Convenience, reduced implementation effort, popularity, or an agent's preference for an existing library are not sufficient justification. Do not make an external library acceptable merely by hiding it behind a first-party wrapper.
+A third-party dependency may be added, or expanded to a new target or runtime role, only under an explicit standing approval in these guidelines or with explicit repository-owner approval for that specific use before modifying the dependency graph. Convenience, reduced implementation effort, popularity, or an agent's preference for an existing library are not sufficient justification. Do not make an external library acceptable merely by hiding it behind a first-party wrapper.
 
 Document every approved exception in durable repository documentation in the same change. Record the dependency and source, purpose and target scope, why a native or first-party implementation is not appropriate, relevant license, security, and maintenance considerations, and the approval context. Merely mentioning or using the dependency in an execution plan, pull-request description, or transient chat is not approval. Regardless of where explicit approval occurs, reflect the exception in durable repository documentation.
 
 Apple system frameworks and the Swift standard library are not third-party dependencies. ThatFactory-owned packages are first-party dependencies. Tooling explicitly required by the shared guidelines is allowed only for its documented tooling role and must not be linked into or shipped with product runtime targets unless separately approved and documented.
 
+Follow [Networking](AgentGuidelines/Guidelines/Networking.md) for Apple-native networking and typed HTTP. Its narrow standing approval for Apple's `swift-http-types` applies only to the documented HTTPTypes and HTTPTypesFoundation runtime role; it does not approve other Apple open-source packages or unrelated roles. Use the guide's normal dependency documentation for that role instead of requesting a separate consumer exception.
+
 Follow [Development workflow](AgentGuidelines/Guidelines/Development.md) for the detailed policy.
-<!-- END THATFACTORY EXTERNAL DEPENDENCY CONTRACT v1 -->
+<!-- END THATFACTORY EXTERNAL DEPENDENCY CONTRACT v2 -->
 ```
 
 Keep the following documentation-maintenance contract in the consumer repository's root `AGENTS.md` so implementation agents receive it directly rather than only through a linked guide. Copy it unchanged and update it when the marker version changes in this template.
@@ -72,26 +78,31 @@ Do not create documentation churn for incidental implementation details that are
 <!-- END THATFACTORY DOCUMENTATION MAINTENANCE CONTRACT v1 -->
 ```
 
-Keep the following marked code-review contract in the consumer repository's root `AGENTS.md` so it is loaded directly for root-level Codex and pull-request work. Copy it unchanged and update it when the marker version changes in this template; a Markdown link to the detailed workflow is not an instruction include.
+Keep the following code-review and PR-lifecycle contracts directly in the consumer repository's root `AGENTS.md`. Synchronize them with `Scripts/sync_codex_review_policy.swift`; both full and review-only profiles use identical canonical text. The template provenance below is development-only: consumer synchronization replaces it with the profile, latest policy revision, and immutable published commit. A Markdown link is not an instruction include.
 
 ```md
-<!-- BEGIN THATFACTORY CODE REVIEW CONTRACT v2 -->
+<!-- THATFACTORY CODEX REVIEW POLICY profile=template revision=1 source=local -->
+<!-- BEGIN THATFACTORY CODE REVIEW CONTRACT v3 -->
 ## Code Review Rules
 
-Review for release-blocking defects introduced or materially exposed by the pull request. A clean review means no unresolved P0/P1 findings; it does not mean exhaustive or perfect software.
+Report only substantiated P0/P1 defects introduced or materially exposed by this change. Require a concrete, reachable failure in a supported use case or documented threat model, with serious impact such as a security-boundary bypass, durable data loss or corruption, a crash or deadlock in an important workflow, loss of availability, or a serious compatibility regression. An acceptance-criterion violation alone does not establish P1 severity.
 
-A blocking finding must identify a concrete, reachable path in a supported use case or the documented threat model that can cause a credible security-boundary bypass, durable data loss or corruption, a crash or deadlock, loss of availability, violation of an explicit acceptance criterion, or a serious compatibility regression.
+For each finding, state severity, preconditions, execution path, impact, evidence, and actionable remediation. Group manifestations of one root cause. Report substantiated blockers together. Omit unsolicited P2/P3 observations, style preferences, speculative hardening, optional tests, and refactors. A clean review means no unresolved P0/P1 blockers, not perfect software.
 
-For every blocking finding, state the severity, preconditions, execution path, impact, evidence, and actionable remediation. Group manifestations that share the same root cause into one finding.
+A follow-up review covers unresolved P0/P1 findings, changes since the previous reviewed commit, and directly affected code. Do not restart a full review of unchanged code. New follow-up findings must be P0/P1 defects introduced by remediation or genuinely hidden by the previous blocker.
+<!-- END THATFACTORY CODE REVIEW CONTRACT v3 -->
 
-Treat P2/P3 observations as non-blocking, including defense-in-depth, theoretical completeness, unsupported use cases, malformed state that trusted code cannot produce, behavior by components outside the threat model, style preferences, and speculative refactoring. Record a useful lower-severity observation once as deferred, declined, duplicate, or follow-up work; do not keep the review loop open for it.
+<!-- BEGIN THATFACTORY PR LIFECYCLE CONTRACT v1 -->
+## Pull Request Lifecycle
 
-In an initial review, report substantiated blockers together. A follow-up review is limited to unresolved P0/P1 findings, changes since the last reviewed commit, and code directly affected by those changes. Do not restart an unrestricted review of unchanged code. A new follow-up finding must be a P0/P1 defect introduced by the remediation or genuinely hidden by the previous blocker.
+Finish implementation, inspect the diff, and run relevant local validation before opening a ready-for-review PR. Drafts are for incomplete preparation; mark ready before waiting for automatic review. Keep the review head stable while the initial review runs. One automatic Codex review is the initial review; never duplicate it with a manual request or repeatedly toggle draft/ready state.
 
-The review-round budget below applies only to Codex GitHub reviews: the configured automatic Codex review and any manual `@codex review` request. It does not apply to ChatGPT review or reasoning delegated through Reasoning Relay. An otherwise-authorized Reasoning Relay workflow may request as many Relay review or follow-up delegations as its own governing workflow requires; those requests neither consume the Codex budget nor require repository-owner authorization under it.
+Establish review configuration from repository-specific evidence. Verify the bot, PR, review round, and reviewed commit using PR/request-comment reactions, review submissions, inline threads, and checks. Eyes means processing, not approval; a thumbs-up means no suggestions only for its verified review round. Historical reactions, missing comments, and elapsed time never certify a newer head. Monitor at most five minutes total with bounded, non-accelerating polls; timeout leaves a required gate unresolved and never authorizes merge.
 
-Automatic Codex review is the initial Codex review. Do not request a manual Codex review unless the repository owner explicitly asks. Never request another Codex review after each remediation commit. Within the normal Codex review budget, at most one owner-authorized, delta-scoped Codex verification review may be requested under [the pull-request review workflow](AgentGuidelines/Guidelines/GitHub/PullRequests.md).
-<!-- END THATFACTORY CODE REVIEW CONTRACT v2 -->
+Batch accepted P0/P1 fixes, verify them locally, rerun affected checks, and disposition and resolve every review thread. A completed initial review plus an explicitly recorded, locally verified remediation-only delta can satisfy the review gate; do not claim Codex reviewed the newer head. New unrelated scope belongs in another PR. Request at most one delta-scoped verification only when the owner explicitly authorizes it. Do not request reviews after every fix or casually mention the bot to start extra work. Separate Security Review is manual and requires explicit owner instruction.
+
+Before merge, rerun the latest published review-policy check, confirm no required review is pending, no unresolved P0/P1 blocker remains, every thread is dispositioned and resolved, required checks pass on the current head, and existing human approval or merge authorization is satisfied. A bot thumbs-up is not a substitute for required GitHub approval. Opening a PR does not authorize merging it.
+<!-- END THATFACTORY PR LIFECYCLE CONTRACT v1 -->
 
 ## Codex review scope
 

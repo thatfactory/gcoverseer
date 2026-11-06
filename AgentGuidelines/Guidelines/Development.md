@@ -10,13 +10,15 @@ ThatFactory applications, games, and reusable packages are first-party by defaul
 
 Do not add a third-party dependency merely to save implementation time, reduce code volume, or avoid learning a platform API. Do not make an external dependency acceptable by hiding it behind a first-party wrapper.
 
-An exception requires explicit approval from the repository owner for the specific dependency and use before changing the dependency graph. If approved, record the decision in durable repository documentation in the same change, such as the architecture document or an ADR. Record the dependency and source, purpose and target scope, why a native or first-party implementation is not appropriate, relevant license, security, and maintenance considerations, version or update policy when material, and the approval context. Do not infer approval from an execution plan, pull-request description, agent choice, or transient chat that merely mentions or uses the dependency. Regardless of where explicit approval occurs, reflect the exception in durable repository documentation.
+Unless these guidelines explicitly pre-approve the dependency for that role, an exception requires explicit approval from the repository owner for the specific dependency and use before changing the dependency graph. If approved, record the decision in durable repository documentation in the same change, such as the architecture document or an ADR. Record the dependency and source, purpose and target scope, why a native or first-party implementation is not appropriate, relevant license, security, and maintenance considerations, version or update policy when material, and the approval context. Do not infer approval from an execution plan, pull-request description, agent choice, or transient chat that merely mentions or uses the dependency. Regardless of where explicit approval occurs, reflect the exception in durable repository documentation.
 
 An existing approved dependency does not authorize a different dependency. Expanding an existing third-party dependency to a new target or runtime role requires the same approval and documentation. Routine version updates that do not change the approved role remain governed by the intentional consumer-update workflow in [Packages](Packages.md).
 
 For this policy, a third-party dependency is externally maintained source or binary code linked into or shipped with the product, including externally maintained Swift packages, vendored libraries, frameworks or XCFrameworks, CocoaPods, Carthage dependencies, and equivalent runtime libraries. Apple system frameworks and the Swift standard library are platform dependencies, not third-party dependencies. Packages maintained by ThatFactory are first-party dependencies.
 
 Tooling dependencies explicitly required by these shared guidelines, such as documentation or build plugins used only by tooling, are pre-approved for that documented role. They must not be linked into or shipped with product runtime targets unless the repository owner separately approves and documents that use.
+
+For networking, follow [Networking](Networking.md), including its narrow [standing dependency approval](Networking.md#standing-dependency-approval) and capability-gap requirements. That approval does not make every Apple-maintained package a platform dependency.
 
 CocoaPods and Carthage are forbidden in every ThatFactory project and are not eligible for the exception process above. Use Swift Package Manager for package dependencies.
 
@@ -36,6 +38,8 @@ AgentGuidelines/** linguist-generated
 Keep each subtree update in its own commit. In the pull-request description, state the old and new guideline versions and link to the central release or pull request where the guideline changes were reviewed. Continue validating the checked-in subtree in CI. Because generated-file diffs are collapsed by default, never edit the subtree locally; make shared changes in the source repository and consume a tagged release.
 
 ## Completion audit
+
+For runtime UI verification, follow [Device Hub, physical devices, and simulators](Xcode/DeviceInteraction.md) together with the consumer's local environment constraints. Plan the observable outcome and cleanup before starting a session.
 
 Before claiming implementation is complete, handing work to the user, preparing, opening, or updating a pull request, declaring merge readiness, or preparing a release, invoke `$agent-guidelines-audit`.
 

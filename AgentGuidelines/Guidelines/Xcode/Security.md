@@ -16,7 +16,7 @@ Confirm the requested targets and configurations, then inspect only relevant are
 - code-signing and entitlements;
 - application capabilities;
 - privacy manifests and required-reason APIs;
-- network security configuration;
+- network security configuration under [Networking](../Networking.md#ownership-and-validation);
 - debug-only behavior and diagnostics;
 - sensitive data storage and logging;
 - unsafe interoperability boundaries.

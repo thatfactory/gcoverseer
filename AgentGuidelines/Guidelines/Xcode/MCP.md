@@ -39,20 +39,7 @@ After a meaningful SwiftUI change:
 
 ## Build, run, and interaction
 
-Use runtime interaction when static compilation cannot establish that a user-visible workflow behaves correctly.
-
-1. Start or select an appropriate simulator/device session.
-2. Build, install, and launch through Xcode tooling.
-3. Prefer one-run launch arguments and environment variables to editing a shared scheme for temporary configuration.
-4. Capture the accessibility or UI hierarchy before interaction.
-5. Capture a screenshot when visual state matters.
-6. Derive interaction targets from the hierarchy; do not guess coordinates when semantic information is available.
-7. Perform the smallest interaction sequence that proves the behavior.
-8. Capture the resulting hierarchy and screenshot.
-9. Report both functional and visible defects.
-10. End resource-heavy sessions when verification is complete.
-
-Retry a slow launch or interaction once when the application may still be settling. Do not add arbitrary waits as a default synchronization strategy.
+Use runtime interaction when static compilation cannot establish that a user-visible workflow behaves correctly. Follow [Device Hub, physical devices, and simulators](DeviceInteraction.md) for authorization, tool and skill discovery, signed builds, session ownership, hierarchy and screenshot targeting, keyboard diagnostics, evidence, and cleanup. Keep consumer-specific destinations and CI/Canvas constraints in the consumer's `AGENTS.md`.
 
 ## Reporting
 

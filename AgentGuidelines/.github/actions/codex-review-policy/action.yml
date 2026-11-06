@@ -1,0 +1,15 @@
+name: Validate Codex review policy
+description: Verify managed AGENTS.md sections against the latest published ThatFactory review policy.
+inputs:
+  profile:
+    description: Consumer adoption profile (full or review-only).
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Check latest published review policy
+      shell: bash
+      env:
+        POLICY_ACTION_PATH: ${{ github.action_path }}
+        POLICY_PROFILE: ${{ inputs.profile }}
+      run: swift "$POLICY_ACTION_PATH/../../../Scripts/sync_codex_review_policy.swift" check --consumer-root "$GITHUB_WORKSPACE" --profile "$POLICY_PROFILE"

@@ -216,7 +216,7 @@ Do not put SwiftUI types, colors, images, localized display strings, or render-r
 
 Put focused external-boundary abstractions in `Services/`. Services wrap APIs, persistence, packages, frameworks, sensors, system features, and other impure operations. Keep this folder flat while a capability has only one file; introduce a familiar capability folder such as `Services/FaceService/` or `Services/CalibrationService/` when that capability genuinely requires several related files. Middleware calls services; views and reducers do not.
 
-Prefer a protocol or otherwise injectable contract when a service must be replaced in tests. Keep transport-specific details behind the service boundary.
+Prefer a protocol or otherwise injectable contract when a service must be replaced in tests. Follow [Networking](../Networking.md) for networking implementation, transport ownership, and validation.
 
 Keep a supporting delegate, adapter, or helper beside its service when only that capability uses it. Local ownership is clearer than promoting a service-private framework bridge to a global `Tools/` folder.
 
