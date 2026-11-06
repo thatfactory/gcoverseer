@@ -22,6 +22,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v7
 
+      - name: Validate latest Codex review policy
+        uses: thatfactory/agent-guidelines/.github/actions/codex-review-policy@1c957669005eea010131c53f0a4146db2ccf7859
+        with:
+          profile: full
       - name: Validate Consumer Integration
         run: AgentGuidelines/Scripts/validate_consumer_setup.swift
 
